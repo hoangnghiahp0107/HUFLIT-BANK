@@ -4,7 +4,7 @@ const cors = require("cors");
 const payOS = require("./utils/payos");
 
 const app = express();
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 5000;
 dotenv.config();
 
 app.use(cors());
