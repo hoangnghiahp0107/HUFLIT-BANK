@@ -1,23 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tạo Link thanh toán</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="main-box">
-        <div class="checkout">
-            <div class="product">
-                <p><strong>Tên sản phẩm:</strong> Mì tôm Hảo Hảo ly</p>
-                <p><strong>Giá tiền:</strong> 1000 VNĐ</p>
-                <p><strong>Số lượng:</strong> 1</p>
-            </div>
-            <form action="/create-payment-link" method="post">
-                <button type="submit" id="create-payment-link-btn">Tạo Link thanh toán</button>
-            </form>
+<html lang="vi">
+  <head>
+    <link rel="icon" href="img/logo.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ngân Hàng HUFLIT BANK</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <!-- Updated: Enhanced navbar with gradient background -->
+    <nav class="navbar navbar-expand-lg navbar-glass">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">
+          <img
+            src="img/logo.png"
+            alt="Logo Ngân Hàng"
+            width="40"
+            height="40"
+            class="rounded-circle border border-2 border-primary"
+          />
+          <span class="ms-2">HUFLIT BANK</span>
+        </a>
+        <div class="d-flex align-items-center gap-3">
+          <div class="dropdown">
+            <button
+              class="btn btn-link position-relative"
+              type="button"
+              id="notifications"
+              data-bs-toggle="dropdown"
+            >
+              <i class="bi bi-bell-fill fs-5"></i>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >2</span
+              >
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
+              <li>
+                <a class="dropdown-item" href="#">Nhận chuyển khoản mới</a>
+              </li>
+              <li><a class="dropdown-item" href="#">Cảnh báo bảo mật</a></li>
+            </ul>
+          </div>
+          <div class="dropdown">
+            <button
+              class="btn btn-link"
+              type="button"
+              id="userMenu"
+              data-bs-toggle="dropdown"
+            >
+              <i class="bi bi-person-circle fs-5"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
+              <li><a class="dropdown-item" href="#">Hồ Sơ Cá Nhân</a></li>
+              <li><a class="dropdown-item" href="#">Cài Đặt</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item text-danger" href="#">Đăng Xuất</a>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
+    </nav>
+
+    <!-- Updated: Enhanced container spacing and card designs -->
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="balance-card glass-effect">
+            <h5>Xin chào, Nguyễn Hoàng Nghĩa</h5>
+            <div class="d-flex align-items-center gap-2 mt-3">
+              <h2 class="mb-0">140.000 ₫</h2>
+              <span class="badge bg-danger">-10.5%</span>
+            </div>
+            <p class="text-muted">Số Dư Khả Dụng</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4 g-3">
+        <div class="col-md-6 col-6">
+          <button
+            class="btn btn-primary w-100 action-btn glass-effect"
+            id="depositBtn"
+          >
+            <i class="bi bi-send-fill"></i>
+            <span>Nạp Tiền</span>
+          </button>
+        </div>
+
+        <div class="col-md-6 col-6">
+          <button class="btn btn-outline-primary w-100 action-btn glass-effect">
+            <i class="bi bi-cash-stack"></i>
+            <span>Rút Tiền</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="transactions mt-4">
+        <h5 class="mb-3">Giao Dịch Gần Đây</h5>
+        <div class="transaction-scroll">
+          <div class="transaction-card glass-effect">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-3">
+                <div class="transaction-icon out">
+                  <i class="bi bi-arrow-up"></i>
+                </div>
+                <div>
+                  <h6 class="mb-0">Rút tiền</h6>
+                  <small class="text-muted">15 Tháng 06, 2025</small>
+                </div>
+              </div>
+              <span class="amount-out">-360.000 ₫</span>
+            </div>
+          </div>
+          <div class="transaction-card glass-effect">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-3">
+                <div class="transaction-icon in">
+                  <i class="bi bi-arrow-down"></i>
+                </div>
+                <div>
+                  <h6 class="mb-0">Nạp tiền</h6>
+                  <small class="text-muted">12 Tháng 06, 2025</small>
+                </div>
+              </div>
+              <span class="amount-in">+500.000 ₫</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Updated: Enhanced offers section with modern design -->
+      <!-- <div class="offers-section mt-4">
+        <h5 class="mb-3">Ưu Đãi Đặc Biệt</h5>
+        <div class="row g-3"></div>
+      </div> -->
     </div>
-</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document
+        .getElementById("depositBtn")
+        .addEventListener("click", function () {
+          window.location.href = "deposit.html";
+        });
+    </script>
+  </body>
 </html>

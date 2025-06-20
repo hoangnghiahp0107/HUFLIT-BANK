@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="img/logo.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nạp tiền HUFLIT BANK</title>
+    <link rel="stylesheet" href="deposit.css" />
+  </head>
+  <body>
+    <div class="container" role="main">
+      <form action="/create-payment-link" method="post">
+        <!-- <label for="excel-upload" class="file-upload-label">Upload Excel</label> -->
+        <input
+          type="file"
+          id="excel-upload"
+          name="excel-upload"
+          accept=".xls,.xlsx"
+        />
+        <label for="price">Giá tiền</label>
+        <div class="price-input">
+          <input
+            type="number"
+            class="price"
+            id="amount"
+            name="amount"
+            min="0"
+            placeholder="Nhập giá tiền"
+            required
+          />
+        </div>
+        <button type="submit" id="create-payment-link-btn">
+          Tạo Link thanh toán
+        </button>
+      </form>
+    </div>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      const excelInput = document.getElementById("excel-upload");
+      excelInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const data = e.target.result;
+          let workbook;
+          try {
+            workbook = XLSX.read(data, { type: "binary" });
+          } catch (error) {
+            alert("Không thể đọc file Excel. Vui lòng thử lại.");
+            return;
+          }
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+          console.log("Dữ liệu đã đọc từ Excel:", jsonData);
+          const parsedData = jsonData.map((row) => {
+            const entry = { id: row.id || row.ID || row.Id || "" };
+            for (let i = 1; i <= 28; i++) {
+              entry["V" + i] = row["V" + i] || "";
+            }
+            entry.Amount = row.Amount || row.amount || "";
+            return entry;
+          });
+          console.log("Dữ liệu phân tích:", parsedData);
+          if (parsedData.length > 0) {
+            console.log("Dòng đầu tiên:", parsedData[0]);
+          }
+        };
+        reader.readAsBinaryString(file);
+      });
+    </script>
+
+    <script>
+      const form = document.querySelector("form");
+
+      form.addEventListener("submit", function (e) {
+        // Ngăn form submit mặc định
+        e.preventDefault();
+
+        // Ví dụ: giả lập dữ liệu fraudulen từ phân tích file Excel
+        // Thay phần này bằng kiểm tra thực tế từ dữ liệu bạn xử lý từ Excel
+        const fraudulen = 0; // ← đổi sang 0 nếu muốn thử case hợp lệ
+
+        if (fraudulen === 1) {
+          Swal.fire({
+            icon: "error",
+            title: "Phát hiện gian lận",
+            text: "Dữ liệu tải lên có dấu hiệu gian lận. Vui lòng kiểm tra lại.",
+            confirmButtonColor: "#2352ff",
+          });
+        } else {
+          // Submit form nếu không phát hiện gian lận
+          form.submit();
+        }
+      });
+    </script>
+  </body>
+</html>

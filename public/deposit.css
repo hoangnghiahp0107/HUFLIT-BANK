@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #56f, #3366ff);
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+.container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem 2rem;
+}
+
+h1 {
+  text-align: center;
+  color: #2352ff;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #334477;
+}
+
+input[type="text"],
+input[type="number"] {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #ddd;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  margin-bottom: 1.5rem;
+  outline-offset: 2px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.price-input {
+  position: relative;
+}
+
+.price-input::before {
+  content: "VND";
+  position: absolute;
+  left: 8px;
+  top: 33%;
+  transform: translateY(-50%);
+  color: #2352ff;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+input.price {
+  padding-left: 44px;
+}
+
+button {
+  background: #56f;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 6px 12px rgba(85, 85, 255, 0.4);
+}
+
+button:hover {
+  background: #234bd9;
+}
+
+@media (max-width: 450px) {
+  .container {
+    margin: 1rem;
+    padding: 2rem 1.5rem;
+  }
+}
+
+.file-upload-label:hover {
+  background: #234bd9;
+}
+input[type="file"] {
+  display: none;
+}
+
+.file-upload-label {
+  display: inline-block;
+  background: #56f;
+  color: white;
+  font-weight: 600;
+  padding: 0.85rem 1.2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(85, 85, 255, 0.4);
+  margin-bottom: 1.8rem;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+}
