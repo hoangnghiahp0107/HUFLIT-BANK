@@ -4,7 +4,7 @@ const cors = require("cors");
 const payOS = require("./utils/payos");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3030;
 dotenv.config();
 
 app.use(cors());
@@ -15,7 +15,7 @@ app.use("/", express.static("public"));
 app.use("/payment", require("./controllers/payment-controller"));
 app.use("/order", require("./controllers/order-controller"));
 app.post("/create-payment-link", async (req, res) => {
-  const YOUR_DOMAIN = "http://localhost:5000";
+  const YOUR_DOMAIN = "http://localhost:3030";
 
   const { amount } = req.body; 
 
