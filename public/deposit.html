@@ -36,54 +36,14 @@
     </div>
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-      const excelInput = document.getElementById("excel-upload");
-      excelInput.addEventListener("change", (event) => {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const data = e.target.result;
-          let workbook;
-          try {
-            workbook = XLSX.read(data, { type: "binary" });
-          } catch (error) {
-            alert("Không thể đọc file Excel. Vui lòng thử lại.");
-            return;
-          }
-          const firstSheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[firstSheetName];
-          const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-          console.log("Dữ liệu đã đọc từ Excel:", jsonData);
-          const parsedData = jsonData.map((row) => {
-            const entry = { id: row.id || row.ID || row.Id || "" };
-            for (let i = 1; i <= 28; i++) {
-              entry["V" + i] = row["V" + i] || "";
-            }
-            entry.Amount = row.Amount || row.amount || "";
-            return entry;
-          });
-          console.log("Dữ liệu phân tích:", parsedData);
-          if (parsedData.length > 0) {
-            console.log("Dòng đầu tiên:", parsedData[0]);
-          }
-        };
-        reader.readAsBinaryString(file);
-      });
-    </script>
-
     <script>
       const form = document.querySelector("form");
 
       form.addEventListener("submit", function (e) {
-        // Ngăn form submit mặc định
         e.preventDefault();
 
-        // Ví dụ: giả lập dữ liệu fraudulen từ phân tích file Excel
-        // Thay phần này bằng kiểm tra thực tế từ dữ liệu bạn xử lý từ Excel
-        const fraudulen = 0; // ← đổi sang 0 nếu muốn thử case hợp lệ
 
+        const fraudulen = 1;
         if (fraudulen === 1) {
           Swal.fire({
             icon: "error",
@@ -92,10 +52,83 @@
             confirmButtonColor: "#2352ff",
           });
         } else {
-          // Submit form nếu không phát hiện gian lận
           form.submit();
         }
       });
     </script>
+    <!-- <script>
+      const form = document.getElementById("fraud-form");
+
+      // Dữ liệu nhập thủ công (ẩn trong script)
+      const transactionData = {
+        V1: -1.3598071336738,
+        V2: -0.0727811733098497,
+        V3: 2.53634673796914,
+        V4: 1.37815522427443,
+        V5: -0.338320769942518,
+        V6: 0.462387777762292,
+        V7: 0.239598554061257,
+        V8: 0.0986979012610507,
+        V9: 0.363786969611213,
+        V10: 0.0907941719789316,
+        V11: -0.551599533260813,
+        V12: -0.617800855762348,
+        V13: -0.991389847235408,
+        V14: -0.311169353699879,
+        V15: 1.46817697209427,
+        V16: -0.470400525259478,
+        V17: 0.207971241929242,
+        V18: 0.0257905801985591,
+        V19: 0.403992960255733,
+        V20: 0.251412098239705,
+        V21: -0.018306777944153,
+        V22: 0.277837575558899,
+        V23: -0.110473910188767,
+        V24: 0.0669280749146731,
+        V25: 0.128539358273528,
+        V26: -0.189114843888824,
+        V27: 0.133558376740387,
+        V28: -0.0210530534538215,
+        Amount: 149.62,
+      };
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        try {
+          const response = await fetch(
+            "http://localhost:8080/api/bank/fraud-detection",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(transactionData),
+            }
+          );
+
+          const result = await response.json();
+
+          if (result.Class === 1) {
+            Swal.fire({
+              icon: "error",
+              title: "Phát hiện gian lận",
+              text: "Dữ liệu có dấu hiệu gian lận. Vui lòng kiểm tra lại.",
+              confirmButtonColor: "#2352ff",
+            });
+          } else {
+            form.submit();
+          }
+        } catch (error) {
+          console.error("Lỗi gọi API:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Lỗi mạng",
+            text: "Không thể gọi API. Vui lòng thử lại.",
+            confirmButtonColor: "#2352ff",
+          });
+        }
+      });
+    </script> -->
   </body>
 </html>
