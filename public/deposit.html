@@ -1,90 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="icon" href="img/logo.png" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nạp tiền HUFLIT BANK</title>
-    <link rel="stylesheet" href="deposit.css" />
-  </head>
-  <body>
-    <div class="container" role="main">
-      <form id="fraud-form" action="/create-payment-link" method="post">
-        <label for="price">Giá tiền</label>
-        <div class="price-input">
-          <input
-            type="number"
-            class="price"
-            id="amount"
-            name="amount"
-            min="0"
-            placeholder="Nhập giá tiền"
-            required
-          />
-        </div>
-        <button type="submit" id="create-payment-link-btn">
-          Tạo Link thanh toán
-        </button>
-      </form>
-    </div>
-    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      const form = document.getElementById("fraud-form");
 
+<head>
+  <link rel="icon" href="img/logo.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nạp tiền HUFLIT BANK</title>
+  <link rel="stylesheet" href="deposit.css" />
+</head>
+
+<body>
+  <div class="container" role="main">
+    <form id="fraud-form" action="/create-payment-link" method="post">
+      <label for="price">Giá tiền</label>
+      <div class="price-input">
+        <input type="number" class="price" id="amount" name="amount" min="0" placeholder="Nhập giá tiền" required />
+      </div>
+      <button type="submit" id="create-payment-link-btn">
+        Tạo Link thanh toán
+      </button>
+    </form>
+  </div>
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    const form = document.getElementById("fraud-form");
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const amountInput = document.getElementById("amount").value;
       const transactionData = {
-        features: [
--0.26064780489439815,
--0.46964845005363426,
-2.4962660826315637,
--0.08372391267814633,
-0.5190136179018007,
-0.7271592691096374,
-0.6377345411881967,
--0.9870200098799841,
-0.2934381004820159,
-0.5490198936308889,
-0.2155979938725388,
-0.5123066605849524,
-0.3336437173298195,
-17982.1
-        ],
+        features:  [ 1.228821, -0.063408, 0.274145, 0.647465, -0.224231, 0.640759, -0.273054, -1.252728, 0.465079, -0.292842, -0.399836, 0.034336, -0.783550, 1100.50],
       };
 
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
+      try {
+        const response = await fetch("http://127.0.0.1:5000/api/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(transactionData),
+        });
 
-        try {
-          debugger;
-          const response = await fetch("http://127.0.0.1:5000/api/predict", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(transactionData),
-          });
-          const result = await response.json();
-          if (result.gianLan === 1) {
-            Swal.fire({
-              icon: "error",
-              title: "Phát hiện gian lận",
-              text: result.ghiChu || "Giao dịch có dấu hiệu gian lận.",
-              confirmButtonColor: "#2352ff",
-            });
-          } else {
-            // Cho submit lại form nếu không có gian lận
-            form.submit();
-          }
-        } catch (error) {
-          console.error("Lỗi gọi API:", error);
+        const result = await response.json();
+
+        // Luôn tạo payload
+          // Lấy kích thước màn hình
+    const screenSize = `${window.screen.width}x${window.screen.height}`;
+
+    // Lấy IP thật (qua API public IP)
+    const ipResponse = await fetch("https://api.ipify.org?format=json");
+    const ipData = await ipResponse.json();
+    const clientIP = ipData.ip;
+
+        const fraudPayload = {
+          username: "user123",
+          ip: clientIP,
+          kichthuocmanhinh: screenSize,
+          v1: transactionData.features[0],
+          v2: transactionData.features[1],
+          v3: transactionData.features[2],
+          v4: transactionData.features[3],
+          v7: transactionData.features[4],
+          v9: transactionData.features[5],
+          v10: transactionData.features[6],
+          v11: transactionData.features[7],
+          v12: transactionData.features[8],
+          v14: transactionData.features[9],
+          v16: transactionData.features[10],
+          v17: transactionData.features[11],
+          v18: transactionData.features[12],
+          amount: amountInput,
+          classvalue: result.gianLan // 0 hoặc 1
+        };
+
+        // Luôn lưu giao dịch vào Supabase
+        const API_URL = "https://mpmtmnfjswssnkjbrhfw.supabase.co/rest/v1/rpc/add_fraud_transaction";
+        const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wbXRtbmZqc3dzc25ramJyaGZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NzU3OTEsImV4cCI6MjA2NTQ1MTc5MX0.DpcrSo6Iu9DbEHImq7WSKMXYnne9GHszSWazgia1LJM";
+        await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "apikey": API_KEY,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(fraudPayload),
+        });
+
+        // Hiển thị thông báo theo kết quả
+        if (result.gianLan === 1) {
           Swal.fire({
             icon: "error",
-            title: "Lỗi mạng",
-            text: "Không thể gọi API. Vui lòng thử lại.",
+            title: "Phát hiện gian lận",
+            text: result.ghiChu || "Giao dịch có dấu hiệu gian lận.",
             confirmButtonColor: "#2352ff",
           });
+        } else {
+            form.submit(); // gửi tiếp form khi hợp lệ
         }
-      });
-    </script>
-  </body>
+
+      } catch (error) {
+        console.error("Lỗi gọi API:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi mạng",
+          text: "Không thể gọi API. Vui lòng thử lại.",
+          confirmButtonColor: "#2352ff",
+        });
+      }
+    });
+
+  </script>
+</body>
+
 </html>

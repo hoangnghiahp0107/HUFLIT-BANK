@@ -1,155 +1,388 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Financial Fraud Dashboard</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
-    />
-    <link rel="stylesheet" href="dashboard.css"/>
-  </head>
-  <body>
-    <div class="container-fluid p-4">
-      <header class="mb-4">
-        <div class="d-flex justify-content-between align-items-center">
-          <h1 class="dashboard-title">
-            Tổng quan giao dịch gian lận tài chính
-          </h1>
-          <div class="d-flex gap-3">
-            <input type="date" class="form-control" />
-            <button class="btn btn-primary">
-              <i class="bi bi-arrow-clockwise"></i> 
-            </button>
-          </div>
-        </div>
-      </header>
 
-      <div class="row g-4 mb-4">
-        <div class="col-md-3">
-          <div class="card border-danger h-100">
-            <div class="card-body">
-              <h5 class="card-title text-danger">Giao dịch gian lận</h5>
-              <h2 class="mb-0">2,456</h2>
-              <small class="text-muted">+15% so với tháng trước</small>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Fraud Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" />
+
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+
+<body>
+  <div class="container-fluid p-4">
+    <header class="mb-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1 class="dashboard-title">
+          Tổng quan giao dịch gian lận tài chính
+        </h1>
+        <div class="d-flex gap-3">
+          <input type="date" class="form-control" />
+          <button class="btn btn-primary">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="row g-4 mb-4">
+      <div class="col-md-3">
+        <div class="card border-danger h-100">
+          <div class="card-body">
+            <h5 class="card-title text-danger">Giao dịch gian lận</h5>
+            <h2 class="mb-0" id="count1">2,456</h2>
+            <small class="text-muted" id="rateCount">+15% so với tháng trước</small>
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="card border-warning h-100">
-            <div class="card-body">
-              <h5 class="card-title text-warning">Giá trị giao dịch hao hụt</h5>
-              <h2 class="mb-0">$1.2M</h2>
-              <small class="text-muted">Tổng số tiền</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card border-info h-100">
-            <div class="card-body">
-              <h5 class="card-title text-info">Các dự án bị ảnh hưởng</h5>
-              <h2 class="mb-0">18</h2>
-              <small class="text-muted">Trên nhiều nền tảng</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card border-primary h-100">
-            <div class="card-body">
-              <h5 class="card-title text-primary">Tỷ lệ gian lận</h5>
-              <h2 class="mb-0">3.2%</h2>
-              <small class="text-muted">Tổng số giao dịch</small>
-            </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-warning h-100">
+          <div class="card-body">
+            <h5 class="card-title text-warning">Giá trị giao dịch hao hụt</h5>
+            <h2 class="mb-0" id="totalloss">$1.2M</h2>
+            <small class="text-muted">Tổng số tiền</small>
           </div>
         </div>
       </div>
 
-      <div class="row g-4 mb-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title">Phân tích xu hướng gian lận</h5>
-              <canvas id="trendChart" height="300"></canvas>
-            </div>
-        </div>
-
-      </div>
-
-      <div class="card mb-4">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="card-title mb-0">Thống kê tài khoản gian lận</h5>
-            <div class="d-flex gap-3">
-              <select class="form-select">
-                <option>All Projects</option>
-                <option>Project Alpha</option>
-                <option>Project Beta</option>
-              </select>
-              <select class="form-select">
-                <option>Fraud Severity</option>
-                <option>High</option>
-                <option>Medium</option>
-                <option>Low</option>
-              </select>
-            </div>
+      <div class="col-md-3">
+        <div class="card border-primary h-100">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Tỷ lệ gian lận</h5>
+            <h2 class="mb-0" id="1rate">3.2%</h2>
+            <small class="text-muted">Tổng số giao dịch</small>
           </div>
-          <div class="table-responsive">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>Tài khoản</th>
-                  <th>Số lượng giao dịch</th>
-                  <th>Gian lận</th>
-                  <th>Gian lận %</th>
-                  <th>Tác động tài chính</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Project Alpha</td>
-                  <td>45,678</td>
-                  <td class="text-danger">892</td>
-                  <td>1.95%</td>
-                  <td>$234,567</td>
-                </tr>
-                <tr>
-                  <td>Project Beta</td>
-                  <td>32,456</td>
-                  <td class="text-danger">654</td>
-                  <td>2.01%</td>
-                  <td>$187,654</td>
-                </tr>
-                <tr>
-                  <td>Project Gamma</td>
-                  <td>28,976</td>
-                  <td class="text-danger">432</td>
-                  <td>1.49%</td>
-                  <td>$156,789</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <nav>
-            <ul class="pagination justify-content-end">
-              <li class="page-item">
-                <a class="page-link" href="#">Previous</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-          </nav>
         </div>
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </body>
+
+    <div class="row g-4 mb-4">
+      <div class="col-lg-8">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Tỷ lệ so với tháng trước</h5>
+            <canvas id="monthChart" height="150"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Tỷ lệ giữa giao dịch gian lận và tổng (%)</h5>
+            <canvas id="pieChart" height="150"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 class="card-title mb-0">Danh sách giao dịch</h5>
+
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover" id="trans-data">
+            <thead>
+              <tr>
+                <th>#</th>
+
+                <th>Username</th>
+                <th>Timestamp</th>
+                <th>IP</th>
+                <th>Giá tiền</th>
+                <th>Phân loại</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="modal fade" id="detailModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Chi tiết giao dịch</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="detail-body">
+            <!-- Nội dung chi tiết -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script>
+    const API_URL = "https://mpmtmnfjswssnkjbrhfw.supabase.co/rest/v1/fraud_transactions";
+    const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wbXRtbmZqc3dzc25ramJyaGZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NzU3OTEsImV4cCI6MjA2NTQ1MTc5MX0.DpcrSo6Iu9DbEHImq7WSKMXYnne9GHszSWazgia1LJM";
+
+    // Lấy dữ liệu tổng quan
+    fetch('https://mpmtmnfjswssnkjbrhfw.supabase.co/rest/v1/rpc/count_fraud_summary_json', {
+      headers: { "apikey": API_KEY }
+    }).then(res => res.json())
+      .then(data => {
+        // Giả sử bạn muốn lấy countClass1
+        document.getElementById("count1").textContent = data.countClass1.toLocaleString();
+        const count0 = data.countClass0 || 0;
+        const count1 = data.countClass1 || 0;
+
+
+        const rate = count0 + count1 > 0
+          ? (count1 / (count0 + count1)) * 100
+          : 0;
+
+        console.log("Tỷ lệ gian lận:", rate);
+        // Render tỷ lệ (1 thập phân)
+        document.getElementById("1rate").textContent = rate.toFixed(1) + "%";
+
+
+
+
+        // Biểu đồ tròn
+        const ctxPie = document.getElementById('pieChart').getContext('2d');
+        new Chart(ctxPie, {
+          type: 'pie',
+          data: {
+            labels: ['Bình thường', 'Gian lận'],
+            datasets: [{
+              data: [count0, count1],
+              backgroundColor: ['#4caf50', '#f44336']
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (ctx) =>
+                    `${ctx.label}: ${ctx.raw.toLocaleString()} (${((ctx.raw / (count0 + count1)) * 100).toFixed(1)}%)`
+                }
+              },
+              datalabels: {
+                color: '#fff',
+                font: { weight: 'bold' },
+                formatter: (value, ctx) => {
+                  let percentage = ((value / (count0 + count1)) * 100).toFixed(1);
+                  return `${value} (${percentage}%)`;
+                }
+              }
+            }
+          },
+          plugins: [ChartDataLabels]
+        });
+
+      })
+      .catch(err => console.error("Lỗi tải dữ liệu:", err));
+
+    //lấy dữ liệu giao dịch
+    fetch(API_URL, {
+      headers: { "apikey": API_KEY }
+    })
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector("#trans-data tbody");
+        let totalLoss = 0;
+
+        // Xác định tháng hiện tại và các tháng trước
+        const now = new Date();
+        const months = [];
+        for (let i = 4; i >= 0; i--) {
+          const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+          months.push({
+            key: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`,
+            label: d.toLocaleString('vi-VN', { month: 'short', year: 'numeric' }),
+            count: 0
+          });
+        }
+
+        // Lọc và thống kê dữ liệu
+        data.forEach(row => {
+          if (row.class === 1) {
+            totalLoss += row.amount; // cộng tổng thiệt hại
+          }
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+        <td>${row.id}</td>
+        <td>${row.username}</td>
+        <td>${new Date(row.timestamp).toLocaleString()}</td>
+        <td>${row.ip}</td>
+        <td>${row.amount.toLocaleString()}</td>
+        <td>${row.class === 1 ? 'Gian lận' : 'Bình thường'}</td>
+        <td>
+          <button class="btn btn-sm btn-primary" onclick='showDetail(${JSON.stringify(row)})'>Xem chi tiết</button>
+        </td>
+      `;
+          tbody.appendChild(tr);
+
+          // Nếu là gian lận thì cộng vào tháng tương ứng
+          if (row.class === 1) {
+            const ts = new Date(row.timestamp);
+            const key = `${ts.getFullYear()}-${String(ts.getMonth() + 1).padStart(2, '0')}`;
+            const monthData = months.find(m => m.key === key);
+            if (monthData) {
+              monthData.count++;
+            }
+          }
+        });
+
+        // Render tổng thiệt hại
+        document.getElementById("totalloss").textContent = totalLoss.toLocaleString() + " VND";
+
+        // Tính tỷ lệ tăng/giảm
+        const currentMonthCount = months[4].count;
+        const lastMonthCount = months[3].count;
+        let percentChange = 0;
+        if (lastMonthCount > 0) {
+          percentChange = ((currentMonthCount - lastMonthCount) / lastMonthCount * 100).toFixed(0);
+        }
+
+        document.getElementById("rateCount").textContent = `${percentChange >= 0 ? '+' : ''}${percentChange}% so với tháng trước`;
+        // Vẽ biểu đồ đường
+        const ctx = document.getElementById('monthChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: months.map(m => m.label),
+            datasets: [{
+              label: 'Số vụ gian lận',
+              data: months.map(m => m.count),
+              fill: false,
+              borderColor: '#f44336',
+              tension: 0.3,
+              pointBackgroundColor: '#f44336',
+              pointRadius: 5
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: ctx => `${ctx.raw} vụ`
+                }
+              }
+            },
+            scales: {
+              y: { beginAtZero: true }
+            }
+          }
+        });
+      })
+      .catch(err => console.error("Lỗi tải dữ liệu:", err));
+
+
+
+    function showDetail(row) {
+      let html = `
+    <div class="row g-3">
+        <!-- Card 1: Thông tin chung -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">Thông tin chung</div>
+                <div class="card-body">
+                    <p><strong>ID:</strong> ${row.id}</p>
+                    <p><strong>Thời gian:</strong> ${new Date(row.timestamp).toLocaleString()}</p>
+                    <p><strong>Username:</strong> ${row.username}</p>
+                    <p><strong>IP:</strong> ${row.ip}</p>
+                    <p><strong>Số tiền:</strong> ${row.amount.toLocaleString()}</p>
+        <p><strong>Class:</strong> ${row.class}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Thông tin đặc trưng -->
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">Đặc trưng (Features)</div>
+                <div class="card-body">
+                    <div class="table-responsive mb-3">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${Object.keys(row)
+                    .filter(k => /^v\d+$/.test(k))
+                    .map(k => `
+                        <tr>
+                            <td>${k}</td>
+                            <td>${typeof row[k] === 'number' ? row[k].toFixed(5) : row[k]}</td>
+                        </tr>
+                    `).join('')}
+            </tbody>
+        </table>
+    </div>
+    <div style="overflow-x:auto;">
+        <canvas id="featuresBarChart" height="120"></canvas>
+    </div>
+        </div>
+    </div>
+
+        <!-- Card 3: Thông tin khác -->
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">Thông tin khác</div>
+                <div class="card-body">
+                    ${Object.keys(row)
+          .filter(k => !['id', 'timestamp', 'username', 'ip', 'amount', 'class'].includes(k) && !/^v\d+$/.test(k))
+          .map(k => `<p><strong>${k}:</strong> ${row[k]}</p>`)
+          .join('')}
+                </div>
+            </div>
+        </div>
+    </div>`;
+
+      document.getElementById("detail-body").innerHTML = html;
+      new bootstrap.Modal(document.getElementById("detailModal")).show();
+
+      // Vẽ biểu đồ cột cho các đặc trưng v1, v2, ...
+      const featureKeys = Object.keys(row).filter(k => /^v\d+$/.test(k));
+      const featureValues = featureKeys.map(k => row[k]);
+      const ctxBar = document.getElementById('featuresBarChart').getContext('2d');
+      // Chỉ destroy nếu là instance của Chart
+      if (window.featuresBarChart instanceof Chart) {
+        window.featuresBarChart.destroy();
+      }
+      window.featuresBarChart = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+          labels: featureKeys,
+          datasets: [{
+            label: 'Giá trị đặc trưng',
+            data: featureValues,
+            backgroundColor: '#4caf50'
+          }]
+        },
+        options: {
+          responsive: true,
+          indexAxis: 'x',
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              ticks: { autoSkip: false, maxRotation: 90, minRotation: 45 }
+            }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+
 </html>

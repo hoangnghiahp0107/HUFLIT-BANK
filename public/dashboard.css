@@ -89,3 +89,20 @@ body {
     font-size: 1.5rem;
   }
 }
+
+.table-responsive {
+    max-height: 300px; /* Chiều cao cố định */
+    overflow-y: auto;  /* Cho phép scroll dọc */
+}
+
+.table {
+    table-layout: fixed; /* Cố định chiều rộng cột */
+    width: 100%;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    background: white; /* Nền để che khi scroll */
+    z-index: 2;
+}
